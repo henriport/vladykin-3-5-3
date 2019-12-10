@@ -1,4 +1,6 @@
 public class NegativeTextAnalyzer extends KeywordAnalyzer implements TextAnalyzer {
+    private Label negativeLabel;
+
     @Override
     protected String[] getKeywords() {
         return new String[0];
@@ -6,7 +8,7 @@ public class NegativeTextAnalyzer extends KeywordAnalyzer implements TextAnalyze
 
     @Override
     protected Label getLabel() {
-        return null;
+        return negativeLabel;
     }
 
     @Override

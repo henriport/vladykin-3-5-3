@@ -8,8 +8,10 @@ public class TooLongTextAnalyzer implements TextAnalyzer {
     @Override
     public Label processText(String text) {
         if (text.length() >= maxLength) {
+            System.out.println("too_long");
             return Label.TOO_LONG;
         } else {
+            System.out.println("long_ok");
             return Label.OK;
         }
     }

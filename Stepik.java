@@ -33,6 +33,11 @@ public class Stepik {
                 new TooLongTextAnalyzer(commentMaxLength),
                 new SpamAnalyzer(spamKeywords)
         };
+        TextAnalyzer[] textAnalyzers0 = {
+                new SpamAnalyzer(spamKeywords),
+                new NegativeTextAnalyzer(),
+                new TooLongTextAnalyzer(commentMaxLength)
+        };
         // тестовые комментарии
         String[] tests = new String[8];
         tests[0] = "This comment is so good.";                            // OK
@@ -43,10 +48,14 @@ public class Stepik {
         tests[5] = "The comment is a spam, maybeeeeeeeeeeeeeeeeeeeeee!";  // SPAM or TOO_LONG
         tests[6] = "Negative bad :( spam.";                               // SPAM or NEGATIVE_TEXT
         tests[7] = "Very bad, very neg =(, very ..................";      // SPAM or NEGATIVE_TEXT or TOO_LONG
-        TextAnalyzer[][] textAnalyzers = {textAnalyzers1, textAnalyzers2, textAnalyzers3,
-                textAnalyzers4, textAnalyzers5, textAnalyzers6};
+        //TextAnalyzer[][] textAnalyzers = {textAnalyzers1, textAnalyzers2, textAnalyzers3,
+        //        textAnalyzers4, textAnalyzers5, textAnalyzers6};
         Stepik testObject = new Stepik();
-        int numberOfAnalyzer; // номер анализатора, указанный в идентификаторе textAnalyzers{№}
+        for (int i = 0; i < tests.length; i++) {
+            System.out.println("check:" + tests[i]);
+            System.out.println(testObject.checkLabels(textAnalyzers0, tests[i]));
+        }
+        /*int numberOfAnalyzer; // номер анализатора, указанный в идентификаторе textAnalyzers{№}
         int numberOfTest = 0; // номер теста, который соответствует индексу тестовых комментариев
         for (String test : tests) {
             numberOfAnalyzer = 1;
@@ -58,10 +67,15 @@ public class Stepik {
                 numberOfAnalyzer++;
             }
             numberOfTest++;
-        }
+        }*/
+
     }
 
     public Label checkLabels(TextAnalyzer[] analyzers, String text) {
+        Label[] labels = new Label[analyzers.length];
+        for (int i = 0; i < analyzers.length; i++) {
+            labels[i] = analyzers[i].processText(text);
+        }
         return analyzers[0].processText(text);
     }
 }

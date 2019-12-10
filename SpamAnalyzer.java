@@ -7,7 +7,7 @@ public class SpamAnalyzer extends KeywordAnalyzer implements TextAnalyzer {
 
     @Override
     protected String[] getKeywords() {
-        return new String[0];
+        return keywords;
     }
 
     @Override
