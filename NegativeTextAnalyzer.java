@@ -1,5 +1,8 @@
 public class NegativeTextAnalyzer extends KeywordAnalyzer implements TextAnalyzer {
-    private Label negativeLabel;
+
+    NegativeTextAnalyzer() {
+
+    }
 
     @Override
     protected String[] getKeywords() {
@@ -8,11 +11,16 @@ public class NegativeTextAnalyzer extends KeywordAnalyzer implements TextAnalyze
 
     @Override
     protected Label getLabel() {
-        return negativeLabel;
+        return null;
     }
 
     @Override
     public Label processText(String text) {
-        return null;
+        if (text.contains(":(") || text.contains("=(") || text.contains(":|")) {
+            System.out.println("negative");
+            return Label.NEGATIVE_TEXT;
+        }
+        System.out.println("positive");
+        return Label.OK;
     }
 }

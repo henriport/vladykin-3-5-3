@@ -1,9 +1,11 @@
+import java.util.Arrays;
+
 public class Stepik {
     public static void main(String[] args) {
         // инициализация анализаторов для проверки в порядке данного набора анализаторов
         String[] spamKeywords = {"spam", "bad"};
         int commentMaxLength = 40;
-        TextAnalyzer[] textAnalyzers1 = {
+        /*TextAnalyzer[] textAnalyzers1 = {
                 new SpamAnalyzer(spamKeywords),
                 new NegativeTextAnalyzer(),
                 new TooLongTextAnalyzer(commentMaxLength)
@@ -32,7 +34,7 @@ public class Stepik {
                 new NegativeTextAnalyzer(),
                 new TooLongTextAnalyzer(commentMaxLength),
                 new SpamAnalyzer(spamKeywords)
-        };
+        };*/
         TextAnalyzer[] textAnalyzers0 = {
                 new SpamAnalyzer(spamKeywords),
                 new NegativeTextAnalyzer(),
@@ -52,7 +54,7 @@ public class Stepik {
         //        textAnalyzers4, textAnalyzers5, textAnalyzers6};
         Stepik testObject = new Stepik();
         for (int i = 0; i < tests.length; i++) {
-            System.out.println("check:" + tests[i]);
+            System.out.println(i + ".check:" + tests[i]);
             System.out.println(testObject.checkLabels(textAnalyzers0, tests[i]));
         }
         /*int numberOfAnalyzer; // номер анализатора, указанный в идентификаторе textAnalyzers{№}
@@ -72,10 +74,15 @@ public class Stepik {
     }
 
     public Label checkLabels(TextAnalyzer[] analyzers, String text) {
-        Label[] labels = new Label[analyzers.length];
+        Label tmpLabel;
         for (int i = 0; i < analyzers.length; i++) {
-            labels[i] = analyzers[i].processText(text);
+            tmpLabel = analyzers[i].processText(text);
+            if (tmpLabel != null) {
+                return tmpLabel;
+            } else {
+                return Label.OK;//_______________________
+            }
         }
-        return analyzers[0].processText(text);
+        return Label.OK;
     }
 }

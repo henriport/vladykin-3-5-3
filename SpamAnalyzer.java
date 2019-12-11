@@ -3,6 +3,9 @@ public class SpamAnalyzer extends KeywordAnalyzer implements TextAnalyzer {
 
     SpamAnalyzer(String[] kwords) {
         keywords = new String[kwords.length];
+        for (int i = 0; i < kwords.length; i++) {
+            keywords[i] = kwords[i];
+        }
     }
 
     @Override
