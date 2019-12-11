@@ -1,10 +1,8 @@
-import java.util.Arrays;
-
 public class Stepik {
     public static void main(String[] args) {
         // инициализация анализаторов для проверки в порядке данного набора анализаторов
         String[] spamKeywords = {"spam", "bad"};
-        int commentMaxLength = 40;
+        int commentMaxLength = 10;
         /*TextAnalyzer[] textAnalyzers1 = {
                 new SpamAnalyzer(spamKeywords),
                 new NegativeTextAnalyzer(),
@@ -41,15 +39,17 @@ public class Stepik {
                 new TooLongTextAnalyzer(commentMaxLength)
         };
         // тестовые комментарии
-        String[] tests = new String[8];
-        tests[0] = "This comment is so good.";                            // OK
-        tests[1] = "This comment is so Loooooooooooooooooooooooooooong."; // TOO_LONG
-        tests[2] = "Very negative comment !!!!=(!!!!;";                   // NEGATIVE_TEXT
-        tests[3] = "Very BAAAAAAAAAAAAAAAAAAAAAAAAD comment with :|;";    // NEGATIVE_TEXT or TOO_LONG
-        tests[4] = "This comment is so bad....";                          // SPAM
-        tests[5] = "The comment is a spam, maybeeeeeeeeeeeeeeeeeeeeee!";  // SPAM or TOO_LONG
-        tests[6] = "Negative bad :( spam.";                               // SPAM or NEGATIVE_TEXT
-        tests[7] = "Very bad, very neg =(, very ..................";      // SPAM or NEGATIVE_TEXT or TOO_LONG
+        String[] tests = new String[10];
+        tests[0] = "This comment is so good.";                              // OK
+        tests[1] = "This comment is so Loooooooooooooooooooooooooooong.";   // TOO_LONG
+        tests[2] = "Very negative comment !!!!=(!!!!;";                     // NEGATIVE_TEXT
+        tests[3] = "Very BAAAAAAAAAAAAAAAAAAAAAAAAD comment with :|;";      // NEGATIVE_TEXT + TOO_LONG
+        tests[4] = "This comment is so bad....";                            // SPAM
+        tests[5] = "The comment is a spam, maybeeeeeeeeeeeeeeeeeeeeee!";    // SPAM + TOO_LONG
+        tests[6] = "Negative bad :( spam.";                                 // SPAM + NEGATIVE_TEXT
+        tests[7] = "Very bad, very neg =(, very ..................";        // SPAM + NEGATIVE_TEXT + TOO_LONG
+        tests[8] = "this is sad :(";                                        // NEGATIVE_TEXT
+        tests[9] = "Это весело";                                            // OK
         //TextAnalyzer[][] textAnalyzers = {textAnalyzers1, textAnalyzers2, textAnalyzers3,
         //        textAnalyzers4, textAnalyzers5, textAnalyzers6};
         Stepik testObject = new Stepik();
@@ -70,19 +70,19 @@ public class Stepik {
             }
             numberOfTest++;
         }*/
-
     }
 
     public Label checkLabels(TextAnalyzer[] analyzers, String text) {
-        Label tmpLabel;
+        Label tmpLabel = Label.OK;
+
         for (int i = 0; i < analyzers.length; i++) {
             tmpLabel = analyzers[i].processText(text);
-            if (tmpLabel != null) {
+            //System.out.println("tmpLabel=" + tmpLabel);
+            if (tmpLabel != Label.OK) {
+                //System.out.println("tmpLabel =" + tmpLabel);
                 return tmpLabel;
-            } else {
-                return Label.OK;//_______________________
             }
         }
-        return Label.OK;
+        return tmpLabel;
     }
 }
